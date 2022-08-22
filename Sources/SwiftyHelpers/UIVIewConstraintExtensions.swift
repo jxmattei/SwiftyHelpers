@@ -96,6 +96,4 @@ public enum SizeConstraint {
 
 public enum Edge {
     case top, bottom, leading, trailing, all
-    
-    
 }
