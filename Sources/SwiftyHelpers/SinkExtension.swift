@@ -12,12 +12,11 @@ import Combine
 @available(iOS 13.0, *)
 public extension Publisher {
     @MainActor func bind(receiveCompletion: @escaping ((Subscribers.Completion<Self.Failure>) -> Void), receiveValue: @escaping ((Self.Output) -> Void)) {
-        self.receive(on: DispatchQueue.main) 
+        self.receive(on: DispatchQueue.main)
             .sink(receiveCompletion: receiveCompletion, receiveValue: receiveValue)
             .store(in: &CancellableCollector.shared.cancellables)
     }
 }
-
 
 @available(iOS 13.0, *)
 public extension Publisher where Self.Failure == Never {
@@ -27,5 +26,3 @@ public extension Publisher where Self.Failure == Never {
             .store(in: &CancellableCollector.shared.cancellables)
     }
 }
-
-

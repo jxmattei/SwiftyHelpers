@@ -32,13 +32,12 @@ public protocol StorableFileModel: OwnedDataModel {
     var filename: String { get }
 }
 
-
 public protocol OwnedDataModel: IdentifiableDataModel {
     var ownerId: String { get set }
 }
 
 public protocol IdentifiableDataModel: Codable {
-    static var recordPath : String { get }
+    static var recordPath: String { get }
     var id: String { get set }
     var createdOn: Date { get set }
     var updatedOn: Date { get set }

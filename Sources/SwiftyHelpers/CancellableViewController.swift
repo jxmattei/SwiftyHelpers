@@ -21,5 +21,5 @@ open class CancellableClass {
 
 @available(iOS 13.0, *)
 public protocol CancellableContainer {
-    var cancellables: Set<AnyCancellable>  { get set }
+    var cancellables: Set<AnyCancellable> { get set }
 }

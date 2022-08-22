@@ -33,8 +33,8 @@ open class ActionableViewController<T: Action>: UIViewController, Actionable, Ca
 }
 
 public protocol Actionable: CancellableContainer {
-    associatedtype ActionModel : Action 
-    var actions :  PassthroughSubject<ActionModel, Never> { get set }
+    associatedtype ActionModel: Action
+    var actions: PassthroughSubject<ActionModel, Never> { get set }
     func process(action: ActionModel)
 }
 
