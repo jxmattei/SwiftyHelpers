@@ -7,18 +7,12 @@ import UIKit
 public extension UIView {
 
     func anchorEdgeConstraints(to view: UIView,
-                               edges: [Edge] = [.all],
+                               edges: [Edge] = Edge.all,
                                attachToSafeArea: Bool = false) {
         self.translatesAutoresizingMaskIntoConstraints = false
-        var modifiedEdges: [Edge]
-        if edges.contains(.all) {
-            modifiedEdges = [.top, .bottom, .leading, .trailing]
-        } else {
-            modifiedEdges = edges
-        }
 
         if attachToSafeArea {
-            let array = modifiedEdges.compactMap({
+            let array = edges.compactMap({
                 switch $0 {
                 case .top:
                     return self.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
@@ -28,12 +22,11 @@ public extension UIView {
                     return self.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
                 case .trailing:
                     return self.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-                case .all: return nil
                 }
             })
             NSLayoutConstraint.activate(array)
         } else {
-            let array = modifiedEdges.compactMap({
+            let array = edges.compactMap({
                 switch $0 {
                 case .top:
                     return self.topAnchor.constraint(equalTo: view.topAnchor)
@@ -43,7 +36,6 @@ public extension UIView {
                     return self.leadingAnchor.constraint(equalTo: view.leadingAnchor)
                 case .trailing:
                     return self.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-                case .all: return nil
                 }
             })
             NSLayoutConstraint.activate(array)
@@ -74,16 +66,10 @@ public extension UIStackView {
 
     func padding(_ edges: [Edge], value: CGFloat) {
         self.isLayoutMarginsRelativeArrangement = true
-        var modifiedEdges: [Edge]
-        if edges.contains(.all) {
-            modifiedEdges = [.top, .bottom, .leading, .trailing]
-        } else {
-            modifiedEdges = edges
-        }
-        let topInset = modifiedEdges.contains(.top) ? value : 0
-        let bottomInset = modifiedEdges.contains(.bottom) ? value : 0
-        let leadingInset = modifiedEdges.contains(.leading) ? value : 0
-        let trailingInset = modifiedEdges.contains(.trailing) ? value : 0
+        let topInset = edges.contains(.top) ? value : 0
+        let bottomInset = edges.contains(.bottom) ? value : 0
+        let leadingInset = edges.contains(.leading) ? value : 0
+        let trailingInset = edges.contains(.trailing) ? value : 0
         self.layoutMargins = .init(top: topInset, left: leadingInset, bottom: bottomInset, right: trailingInset)
     }
 
@@ -94,5 +80,7 @@ public enum SizeConstraint {
 }
 
 public enum Edge {
-    case top, bottom, leading, trailing, all
+    case top, bottom, leading, trailing
+
+    public static let all: [Edge] = []
 }

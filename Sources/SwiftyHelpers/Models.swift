@@ -53,4 +53,7 @@ public protocol RecordDataModel: IdentifiableDataModel {
     var recordExists: Bool { get set }
 }
 
-private let recordLocalFolderURL = URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
+private var recordLocalFolderURL: URL {
+    let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+    return URL(fileURLWithPath: path)
+}
