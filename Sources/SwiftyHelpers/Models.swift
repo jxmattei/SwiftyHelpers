@@ -21,36 +21,25 @@ public extension StorableFileModel {
 
     }
 
-    var fileExists: Bool {
+    var localFileExists: Bool {
         let path = localFileURL.path
         return FileManager.default.fileExists(atPath: path)
     }
 }
 
-public protocol StorableFileModel: OwnedDataModel {
+public protocol StorableFileModel: UserOwnedDataModel {
+    static var recordPath: String { get }
     static var type: UTType { get }
     var filename: String { get }
 }
 
-public protocol OwnedDataModel: IdentifiableDataModel {
-    var ownerId: String { get set }
-}
-
 public protocol IdentifiableDataModel: Codable {
-    static var recordPath: String { get }
     var id: String { get set }
-    var createdOn: Date { get set }
-    var updatedOn: Date { get set }
 }
 
-public extension IdentifiableDataModel {
-    mutating func updateDates() {
-        updatedOn = Date()
-    }
-}
 
-public protocol RecordDataModel: IdentifiableDataModel {
-    var recordExists: Bool { get set }
+public protocol UserOwnedDataModel: IdentifiableDataModel {
+    var ownerId: String { get set }
 }
 
 private var recordLocalFolderURL: URL {
